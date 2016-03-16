@@ -1,0 +1,12 @@
+{
+  "name": "dracones.io/phar",
+  "description": "Projeto com a finalidade de gerar arquivos .phar de diretórios",
+  "minimum-stability": "dev",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Pedro Mázala",
+      "email": "pedroh.mazala@gmail.com"
+    }
+  ]
+}
