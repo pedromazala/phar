@@ -1,5 +1,5 @@
 {
-  "name": "dracones.io/phar",
+  "name": "dracones-io/phar",
   "description": "Projeto com a finalidade de gerar arquivos .phar de diretórios",
   "minimum-stability": "dev",
   "license": "MIT",
