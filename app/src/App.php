@@ -27,7 +27,7 @@ class App
         }
 
         if ($output{0} === '.') {
-            $output = path($root, substr($output, 1));
+            $output = path($root, substr($output, 2));
         }
 
         $phar = new Phar($output, (FilesystemIterator::CURRENT_AS_FILEINFO | FilesystemIterator::KEY_AS_FILENAME));
@@ -54,7 +54,7 @@ class App
     {
         $default = [
             '-o' => __PHAR_DIR__ . '/dist/MyFile.phar', // output of compacted file
-            '-r' => '.', // root src with recursive files to compact
+            '-r' => __PHAR_DIR__, // root src with recursive files to compact
             '-s' => 'index.php', // stub file into root to config the start to phar
             '-v' => false
         ];
