@@ -1,33 +1,28 @@
 <?php
+
+namespace PharCreator\Run;
+use PharCreator\Util\File;
+
 /**
- * Created by PhpStorm.
- * Developer : pedro
- * Project   : migration.fagoc.br
- * Date      : 07/03/16
- * Time      : 16:47
+ * Class PharIgnore
+ * @package PharCreator\Run
  */
-
-namespace phar\run;
-
-
 class PharIgnore
 {
-
-    private static $pharignoreFiles = array(
-        '.git/*' => false,
-        '.idea/*' => false,
-        '*.pharignore' => false
-    );
+    /**
+     * @var array
+     */
+    private static $pharignoreFiles = ['.git/*' => false, '.idea/*' => false, '*.pharignore' => false];
 
     /**
-     * @param string $rootPath
-     * @param string[] $files
-     *
-     * @return string[]
+     * @param $path
+     * @return mixed
      */
-    public static function filter($rootPath, $files)
+    public static function filter($path)
     {
-        self::init($rootPath, $files);
+        $files = File::getAllFiles($path);
+
+        self::init($path, $files);
 
         foreach ($files as $key => $file) {
             $include = true;

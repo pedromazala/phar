@@ -1,17 +1,16 @@
 <?php
+
+namespace PharCreator\Error;
+
 /**
- * Created by PhpStorm.
- * Developer : pedro
- * Project   : phar
- * Date      : 07/03/16
- * Time      : 16:43
+ * Class NonDirectoryException
+ * @package PharCreator\Error
  */
-
-namespace phar\error;
-
-
 class NonDirectoryException extends \Exception
 {
+    /**
+     * NonDirectoryException constructor.
+     */
     public function __construct()
     {
         parent::__construct("Informed path is not a directory.");
