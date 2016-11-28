@@ -22,8 +22,12 @@ class App
         $root = $parameters['-r'];
 
         $output = $parameters['-o'];
-        if (!is_dir(dirname($output))) {
-            mkdir(dirname($output), 0755, true);
+        if (file_exists($output)) {
+            unlink($output);
+        }
+        $dist = dirname($output);
+        if (!file_exists($dist) && !is_dir($dist)) {
+            mkdir($dist, 0755, true);
         }
 
         if ($output{0} === '.') {
