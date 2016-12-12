@@ -1,23 +1,25 @@
 <?php
+
+namespace PharCreator\Util;
+
+use PharCreator\Error\NonDirectoryException;
+
 /**
- * Created by PhpStorm.
- * Developer : pedro
- * Project   : phar
- * Date      : 07/03/16
- * Time      : 16:45
+ * Class File
+ * @package PharCreator\Util
  */
-
-namespace phar\util;
-
-use \phar\error\NonDirectoryException;
-
 class File
 {
-    private static $ignoredPaths = array(
-        '.',
-        '..',
-    );
+    /**
+     * @var array
+     */
+    private static $ignoredPaths = ['.', '..'];
 
+    /**
+     * @param $dir
+     * @return array
+     * @throws NonDirectoryException
+     */
     public static function getAllFiles($dir)
     {
         if (!is_dir($dir)) {
@@ -29,9 +31,14 @@ class File
         return $files;
     }
 
-    private static function openDirectory($rootPath, $insides = array())
+    /**
+     * @param $rootPath
+     * @param array $insides
+     * @return array
+     */
+    private static function openDirectory($rootPath, $insides = [])
     {
-        $files = array();
+        $files = [];
 
         $startPath = path($rootPath, $insides);
         $openedDir = opendir($startPath);
@@ -44,7 +51,7 @@ class File
                 $fullPath = path($startPath, $path);
 
                 if (is_dir($fullPath)) {
-                    $files = array_merge($files, self::openDirectory($rootPath, array_merge($insides, array($path))));
+                    $files = array_merge($files, self::openDirectory($rootPath, array_merge($insides, [$path])));
                 } else {
                     $files[] = path($insides, $path);
                 }

@@ -1,9 +1,10 @@
 #!/usr/bin/env php
 ​<?php
+
 define('__PHAR_DIR__', __DIR__);
 
-require __PHAR_DIR__ . "/app/autoload.php";
+require __DIR__ . "/vendor/autoload.php";
 
-//$srcRoot = "/home/pedro/NetBeansProjects/git/migration.fagoc.br";
-//$srcRoot = "/home/pedromazala/NetBeansProjects/migration.fagoc.br";
-\phar\run\Run::start($argv);
+use PharCreator\App;
+
+App::start($argv);
