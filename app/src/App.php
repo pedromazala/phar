@@ -45,7 +45,13 @@ class App
             if ($verbose) {
                 echo ' => ' . $file . PHP_EOL;
             }
-            $phar->addFile(path($root, $file), $file);
+
+            $path_file = path($root, $file);
+            if ($parameters['-c']) {
+                $path_file = self::clearFile($root, $file, $output);
+            }
+
+            $phar->addFile($path_file, $file);
         }
         $phar->setStub($phar->createDefaultStub($parameters['-s']));
     }
@@ -60,7 +66,8 @@ class App
             '-o' => __PHAR_DIR__ . '/dist/MyFile.phar', // output of compacted file
             '-r' => __PHAR_DIR__, // root src with recursive files to compact
             '-s' => 'index.php', // stub file into root to config the start to phar
-            '-v' => false
+            '-v' => false,
+            '-c' => false
         ];
 
         $parameters = [];
@@ -74,5 +81,46 @@ class App
         }
 
         return array_replace($default, $parameters);
+    }
+
+    /**
+     * Remove os comentários dos arquivos
+     * @param $root
+     * @param $file
+     * @param $output
+     * @return string
+     */
+    private static function clearFile($root, $file, $output)
+    {
+        $file_contents = file_get_contents(path($root, $file));
+        $file_new = '';
+
+        $commentTokens = [T_COMMENT];
+        if (defined('T_DOC_COMMENT'))
+            $commentTokens[] = T_DOC_COMMENT; // PHP 5
+        if (defined('T_ML_COMMENT'))
+            $commentTokens[] = T_ML_COMMENT;  // PHP 4
+
+        $tokens = token_get_all($file_contents);
+
+        foreach ($tokens as $token) {
+            if (is_array($token)) {
+                if (in_array($token[0], $commentTokens))
+                    continue;
+
+                $token = $token[1];
+            }
+            $file_new .= $token;
+        }
+
+        $temp_file = path(dirname($output), 'temp', $file);
+        $temp_dir = dirname($temp_file);
+        if (!file_exists($temp_dir)) {
+            mkdir($temp_dir, 0777, true);
+        }
+
+        file_put_contents($temp_file, $file_new);
+
+        return $temp_file;
     }
 }

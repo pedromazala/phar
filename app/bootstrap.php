@@ -5,7 +5,7 @@
  */
 function path()
 {
-    $pieces =[];
+    $pieces = [];
     $funcArgs = func_get_args();
     foreach ($funcArgs as $funcArg) {
         if (is_array($funcArg)) {
@@ -16,7 +16,8 @@ function path()
             $pieces[] = $funcArg;
         }
     }
+
     $path = implode(DIRECTORY_SEPARATOR, $pieces);
 
-    return $path;
+    return str_replace(DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, $path);
 }
