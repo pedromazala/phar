@@ -105,8 +105,9 @@ class App
 
         foreach ($tokens as $token) {
             if (is_array($token)) {
-                if (in_array($token[0], $commentTokens))
+                if (in_array($token[0], $commentTokens)) {
                     continue;
+                }
 
                 $token = $token[1];
             }
